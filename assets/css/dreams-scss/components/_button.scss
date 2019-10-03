@@ -1,0 +1,44 @@
+[class^="button"] {
+    
+    padding: 1.5rem 3rem;
+    border: none;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: .1rem;
+    display: block;
+    margin: 0 auto;
+    
+    cursor: pointer;
+    
+    transition: all .3s ease-in;
+    
+}
+
+.button {
+    
+    &--circular {
+        
+    }
+    
+    &--primary {
+        
+        color: $white;
+        background-color: var(--primary);
+        
+        &:hover {
+            background-color: var(--primary-half);
+        }
+        
+    }
+    
+    &--secondary {
+        
+        color: var(--primary);
+        
+        &:hover {
+            color: var(--primary-half);
+        }
+        
+    }
+    
+}

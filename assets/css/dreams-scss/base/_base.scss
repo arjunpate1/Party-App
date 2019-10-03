@@ -1,0 +1,61 @@
+/* BROWSER RESET */
+*,
+*::after,
+*::before {
+    margin:0;
+    padding:0;
+    box-sizing: inherit;
+}
+
+html {
+    font-size:62.5%;
+    //scroll-behavior: smooth;
+    
+    @include respond(laptop) {
+        
+        @include respondY(laptop) {
+            font-size: 56.25%;
+        }
+    }
+
+    @include respond(tab-land){
+        font-size: 56.25%; //1rem = 9px
+    }
+    
+    @include respond(tab-port){
+        font-size: 50%; //1rem = 8px
+    }
+}
+
+body {
+    box-sizing: border-box;
+    overflow-x: hidden;
+    
+    background-color: var(--bg-color);
+    
+    @if base_body_full == false {
+        padding: $base_body_padding;
+        opacity: 0;
+    }
+}
+
+.body-fixed {
+    
+    position: fixed;
+    
+}
+
+
+::selection {
+  color: $white;
+  background: rgba($primary, .6);
+}
+
+.transition {
+    
+    &-active {
+        transition: background-color 1s, color 1s, border-color 1s !important;
+        transition-timing-function: ease-in;
+    }
+ 
+}

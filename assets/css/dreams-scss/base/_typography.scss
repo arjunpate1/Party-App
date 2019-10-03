@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Poppins&display=swap');
+@import url("https://use.typekit.net/wfl8kew.css");
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1.7;
+    color: $gray-dk-3;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+a {
+    &,
+    &:link,
+    &:visited {
+        color: $primary;
+        text-decoration: none;
+        transition: $normal;
+        
+        &:hover {
+            opacity: .8;
+        }
+    } 
+}
+
+.heading {
+    margin-bottom: 3rem;
+    font-size: $font-md;
+    letter-spacing: 1.5rem;
+    
+    &,
+    &-sub {
+        text-transform: uppercase;
+    }
+    
+    &-sub {
+        font-weight: 700;
+        font-size: 80%;
+        letter-spacing: 1rem;
+    }
+}

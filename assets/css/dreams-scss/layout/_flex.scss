@@ -1,0 +1,25 @@
+.flex {
+    
+    &--vertical-align {
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+    }
+    
+    &--middle-align {
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        
+    }
+    
+    &-container {
+        width: 100%;
+        display: block;
+    }
+    
+}
