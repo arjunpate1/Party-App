@@ -1,3 +1,50 @@
+:root {
+  --primary: #376bb0;
+  --primary-half: rgba(55, 107, 176, .8);
+  --secondary: #e1aa53;
+  --bg-color: #fff;
+  --bg-color-alt: #fafafa;
+  --bg-color-2: #e3e3e3;
+  --bg-inverse: #211f20;
+  --font-color: #222;
+  --font-inverse: #fff; }
 
+[data-theme="dark"] {
+  --primary: #e1aa53;
+  --primary-half: rgba(225, 170, 83, .8);
+  --secondary: #376bb0;
+  --bg-color: #211f20;
+  --bg-color-alt: #151414;
+  --bg-color-2: #000;
+  --bg-inverse: #fff;
+  --font-color: #fff;
+  --font-inverse: #222; }
+
+/*
+0 - 400px:      iPhone Small (phone)
+400 - 600px:    Phone (phone)
+600 - 900px:    Tablet Portrait (tab-port)
+900 - 1200px:   Tablet Landscape (tab-land)
+1200 - 1800px:  Desktop (This is where our normal styles apply)
+1800+           Large Desktop (desktop)
+
+*/
+@impprt "base/typography";
+.hero__title {
+  font-size: 5rem;
+  margin-bottom: 3rem; }
+.hero__subtitle {
+  text-transform: uppercase;
+  letter-spacing: .3rem;
+  font-size: 1.8rem; }
+.hero__countdown {
+  text-transform: uppercase;
+  letter-spacing: .3rem;
+  font-size: 3rem;
+  color: var(--primary); }
+.hero__date {
+  margin-bottom: 5rem; }
+.hero .button--primary {
+  margin-bottom: .75rem; }
 
 /*# sourceMappingURL=main.css.map */

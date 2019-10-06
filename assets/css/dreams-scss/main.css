@@ -1,3 +1,169 @@
+@import url("https://fonts.googleapis.com/css?family=Lato|Poppins&display=swap");
+@import url("https://use.typekit.net/wfl8kew.css");
+:root {
+  --primary: #376bb0;
+  --primary-half: rgba(55, 107, 176, .8);
+  --secondary: #e1aa53;
+  --bg-color: #fff;
+  --bg-color-alt: #fafafa;
+  --bg-color-2: #e3e3e3;
+  --bg-inverse: #211f20;
+  --font-color: #222;
+  --font-inverse: #fff; }
 
+[data-theme="dark"] {
+  --primary: #e1aa53;
+  --primary-half: rgba(225, 170, 83, .8);
+  --secondary: #376bb0;
+  --bg-color: #211f20;
+  --bg-color-alt: #151414;
+  --bg-color-2: #000;
+  --bg-inverse: #fff;
+  --font-color: #fff;
+  --font-inverse: #222; }
+
+/*
+0 - 400px:      iPhone Small (phone)
+400 - 600px:    Phone (phone)
+600 - 900px:    Tablet Portrait (tab-port)
+900 - 1200px:   Tablet Landscape (tab-land)
+1200 - 1800px:  Desktop (This is where our normal styles apply)
+1800+           Large Desktop (desktop)
+
+*/
+/* BROWSER RESET */
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  font-size: 62.5%; }
+@media (max-width: 85em) and (max-height: 41em) {
+  html {
+    font-size: 56.25%; } }
+
+  @media (max-width: 75em) {
+    html {
+      font-size: 56.25%; } }
+  @media (max-width: 56.25em) {
+    html {
+      font-size: 50%; } }
+
+body {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  background-color: var(--bg-color); }
+
+.body-fixed {
+  position: fixed; }
+
+::selection {
+  color: #fff;
+  background: rgba(55, 107, 176, 0.6); }
+
+.transition-active {
+  transition: background-color 1s, color 1s, border-color 1s !important;
+  transition-timing-function: ease-in; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.7;
+  color: #333; }
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400; }
+
+a, a:link, a:visited {
+  color: #376bb0;
+  text-decoration: none;
+  transition: all 0.5s; }
+  a:hover, a:link:hover, a:visited:hover {
+    opacity: .8; }
+
+.heading {
+  margin-bottom: 3rem;
+  font-size: 3rem;
+  letter-spacing: 1.5rem; }
+  .heading, .heading-sub {
+    text-transform: uppercase; }
+  .heading-sub {
+    font-weight: 700;
+    font-size: 80%;
+    letter-spacing: 1rem; }
+
+.section {
+  display: block; }
+  .section--full-height {
+    min-height: 100vh; }
+  .section--app-container {
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    background-color: var(--bg-color); }
+    .section--app-container.active {
+      transform: translate3d(0, 0, 0); }
+    .section--app-container.inactive {
+      transform: translate3d(100vw, 0, 0); }
+  .section--app-page {
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--bg-color); }
+    .section--app-page.current {
+      transform: translate3d(0, 0, 0); }
+    .section--app-page.prev {
+      transform: translate3d(-100vw, 0, 0); }
+    .section--app-page.next {
+      transform: translate3d(100vw, 0, 0); }
+
+.flex--vertical-align {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
+.flex--middle-align {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center; }
+.flex-container {
+  width: 100%;
+  display: block; }
+
+[class^="button"] {
+  padding: 1.5rem 3rem;
+  border: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: .1rem;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: all .3s ease-in; }
+
+.button--primary {
+  color: #fff;
+  background-color: var(--primary); }
+  .button--primary:hover {
+    background-color: var(--primary-half); }
+.button--secondary {
+  color: var(--primary); }
+  .button--secondary:hover {
+    color: var(--primary-half); }
 
 /*# sourceMappingURL=main.css.map */

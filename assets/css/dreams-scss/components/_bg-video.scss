@@ -1,0 +1,42 @@
+.background-video {
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    
+    height: 100%;
+    width: 100%;
+    
+    overflow: hidden;
+    
+    &__video {
+        
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        
+        transition: all .5s ease-in;
+    }
+    
+    &__overlay {
+        
+        --color: var(--bg-color);
+        --opacity: .75;
+        
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+        height: 100%;
+        width: 100%;
+        
+        background-color: var(--color);
+        
+        opacity: var(--opacity);
+        
+        pointer-events: none;
+        
+    }
+    
+}

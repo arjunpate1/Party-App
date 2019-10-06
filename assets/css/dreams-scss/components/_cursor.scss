@@ -1,0 +1,26 @@
+#dreams-cursor {
+    
+    --size: 6rem;
+    --border: 3px solid;
+    --color: var(--primary);
+    --transition: top .1s, left .1s, transform .1s, opacity .3s ease-in, border .8s ease-in;
+    
+    position: fixed;
+    top: calc( var(--size) * (-.5) );
+    left: calc( var(--size) * (-.5) );
+    z-index: 100000000;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+    pointer-events: none;
+    border: var(--border);
+    border-color: var(--color);
+    overflow: visible;
+    
+    //transform: translate3d(0, 0, 0);
+    
+    opacity: 0;
+    
+    transition: var(--transition);
+    
+}
