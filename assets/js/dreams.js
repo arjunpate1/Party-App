@@ -472,11 +472,11 @@ function dream() {
                 list: props.scaleDownCursorElements,
 
                 fx: function() {
-                    cursor.element.setProperty('--color', props.invertedColor);
+                    cursor.element.style.setProperty('--color', props.invertedColor);
                 },
 
                 undo: function() {
-                    cursor.element.setProperty('--color', props.color);
+                    cursor.element.style.setProperty('--color', props.color);
                 }
 
             });
