@@ -7,6 +7,20 @@
         
         padding: 0 10rem;
         
+        @include respond(tab-land) {
+            padding: 0 5rem;
+        }
+        
+        @include respond(tab-port) {
+            padding: 0;
+        }
+        
+        @include respond(phone) {
+            padding: 0 2.5rem;
+            grid-template-columns: auto;
+            grid-gap: 10rem;
+        }
+        
     }
     
     &__item {
@@ -19,6 +33,11 @@
             height: auto;
             width: 80%;
             margin: 0 0 0 auto;
+            
+            @include respond(phone) {
+                margin: 0 auto;
+                width: 100%;
+            }
         }
         
     }
@@ -31,6 +50,10 @@
         letter-spacing: .7rem;
         margin-bottom: 3rem;
         color: var(--primary);
+        
+        @include respond(phone) {
+            text-align: center;
+        }
         
     }
     

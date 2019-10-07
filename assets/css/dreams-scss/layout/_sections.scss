@@ -3,6 +3,18 @@
     display: block;
     padding: 20rem;
     
+    @include respond(tab-land) {
+        padding: 20rem 10rem;
+    }
+    
+    @include respond(tab-port) {
+        padding: 15rem 5rem;
+    }
+    
+    @include respond(phone) {
+        padding: 12rem 3rem;
+    }
+    
     &--full-height {
         
         position: relative;

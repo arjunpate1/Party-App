@@ -21,7 +21,7 @@ a {
     &,
     &:link,
     &:visited {
-        color: $primary;
+        color: var(--primary);
         text-decoration: none;
         transition: $normal;
         

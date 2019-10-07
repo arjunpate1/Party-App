@@ -2,8 +2,15 @@
     
     color: var(--white);
     
+    padding: 5rem;
+    
     &__title {
         font-size: 7rem;
+        
+        @include respond(phone) {
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
     }
     
     &__subtitle {
@@ -38,6 +45,11 @@
     
     .button--primary {
         margin-bottom: .75rem;
+        font-size: 1.7rem;
+    }
+    
+    .button--secondary {
+        font-size: 1.7rem;
     }
     
 }

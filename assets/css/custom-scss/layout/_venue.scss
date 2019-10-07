@@ -22,6 +22,18 @@
         height: 50rem;
         margin: 5rem auto 0 auto;
         
+        @include respond(tab-land) {
+            width: 75%;
+        }
+        
+        @include respond(tab-port) {
+            width: 85%;
+        }
+        
+        @include respond(phone) {
+            width: 95%;
+        }
+        
         #map {
             height: 100%;
             width: 100%;

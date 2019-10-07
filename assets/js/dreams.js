@@ -469,7 +469,7 @@ function dream() {
             // Invert Cursor
             quickAdd({
 
-                list: props.scaleDownCursorElements,
+                list: props.invertCursorElements,
 
                 fx: function() {
                     cursor.element.style.setProperty('--color', props.invertedColor);

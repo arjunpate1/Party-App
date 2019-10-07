@@ -2,5 +2,117 @@
     
     background-color: var(--bg-color-alt);
     
+    &__title {
+        font-size: 4rem;
+        text-transform: uppercase;
+        color: var(--primary);
+        letter-spacing: .7rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    &__subtitle {
+        text-align: center;
+        margin-bottom: 10rem;
+        letter-spacing: .1rem;
+    }
+    
+    &__grid {
+        padding: 0 10rem;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-column-gap: 5rem;
+        grid-row-gap: 10rem;
+        
+        @include respond(tab-land) {
+            padding: 0;
+        }
+        
+        @include respond(tab-port) {
+            grid-column-gap: 0;
+        }
+        
+        @include respond(phone) {
+            grid-template-columns: auto;
+        }
+        
+    }
+    
+    &__person {
+        display: grid;
+        grid-template-columns: 12rem auto;
+
+        @include respond(tab-port) {
+            grid-template-columns: auto;
+        }
+        
+    }
+    
+    &__picture {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+        @include respond(tab-port) {
+            display: block;
+        }
+        
+        img {
+            display: block;
+            width: 100%;
+            border-radius: 50%;
+            
+            @include respond(tab-port) {
+                width: 12rem;
+                margin: 0 auto;
+                margin-bottom: 3rem;
+            }
+        }
+    }
+    
+    &__bio {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 5rem;
+        
+        @include respond(tab-port) {
+            padding: 0 2rem;
+            text-align: center;
+            display: block;
+        }
+        
+        h3 {
+            font-size: 2.2rem;
+            letter-spacing: .1rem;
+        }
+        
+        hr {
+            
+            border: none;
+            height: .3rem;
+            width: 10rem;
+            margin: 1.5rem 0;
+            
+            background-color: var(--primary);
+            
+            @include respond(tab-port) {
+                margin: 1.5rem auto;
+            }
+            
+        }
+        
+        h4 {
+            text-transform: uppercase;
+            letter-spacing: .4rem;
+            font-weight: bold;
+            font-size: 1.3rem;
+            
+            @include respond(tab-port) {
+                margin-bottom: 1rem;
+            }
+        }
+        
+    }
     
 }
