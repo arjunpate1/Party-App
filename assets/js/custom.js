@@ -51,4 +51,40 @@ function init() {
     */
 }
 
+function initMappy() {
+        var myLatLng = {lat: -25.363, lng: 131.044};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: myLatLng
+        });
+
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'Hello World!'
+        });
+      }
+
+function initMap() {
+    
+    var home = {lat: -25.363, lng: 131.044};
+    
+    var options = {
+        zoom: 13,
+        center: home
+    };
+    
+    var selector = document.querySelector("#map");
+    
+    var map = new google.maps.Map(selector, options);
+    
+    var marker = new google.maps.Marker({
+        position: home,
+        map: map,
+        title: "Arjun's House"
+    });
+    
+}
+
 window.addEventListener("load", init);
