@@ -1,9 +1,32 @@
 .venue {
+    background-color: var(--bg-color-alt);
     
     text-align: center;
     
     &__title {
         font-size: 4rem;
+        text-transform: uppercase;
+        color: var(--primary);
+        letter-spacing: .7rem;
+        margin-bottom: 3rem;
+    }
+    
+    &__address {
+        letter-spacing: .1rem;
+        line-height: 2;
+        
+    }
+    
+    &__map {
+        width: 60%;
+        height: 50rem;
+        margin: 5rem auto 0 auto;
+        
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        
     }
     
 }
