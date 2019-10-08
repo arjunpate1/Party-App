@@ -1,0 +1,21 @@
+.terms {
+    
+    &__container {
+        text-align: center;
+        width: 70rem;
+        margin: 0 auto;
+    }
+    
+    &__title {
+        font-size: 4rem;
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: .7rem;
+        margin-bottom: 3rem;
+    }
+    
+    &__text {
+        margin-bottom: 5rem;
+    }
+    
+}

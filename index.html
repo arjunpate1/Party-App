@@ -245,26 +245,28 @@
                 
                 <form id="login-form" class="splash__form">
                     
-                    <h2 class="splash__title">Get Started</h2>
+                    <h2 class="splash__title">Let's Get Started</h2>
                     
-                    <input class="splash__input" type="text" placeholder="Name" id="name-field">
-                    <input class="splash__input" type="email" placeholder="Email Address" id="email-field">
-                    
-                    <label class="splash__checkbox nocursor">
-                        
-                        <input type="checkbox" id="subscribe">
-                        
-                        <div>
-                            
-                            <span>
-                                <i class="material-icons">check</i>
-                            </span>
-                            
-                            <p>Yes I want to hear about future parites</p>
-                            
-                        </div>
-                            
-                    </label>
+                    <div class="splash__container">
+                        <input class="splash__input" type="text" placeholder="Name" id="name-field">
+                        <input class="splash__input" type="email" placeholder="Email Address" id="email-field">
+
+                        <label class="splash__checkbox nocursor">
+
+                            <input type="checkbox" id="subscribe">
+
+                            <div>
+
+                                <span>
+                                    <i class="material-icons">check</i>
+                                </span>
+
+                                <p>Yes I want to hear about future parites</p>
+
+                            </div>
+
+                        </label>
+                    </div>
                     
                     <button class="button--circular rspv-next">
                         <i class="material-icons">arrow_forward</i>
@@ -277,8 +279,8 @@
             <!-- Enter Information -->
             <div class="section--app-page next rspv">
                 
-                <div>
-                    
+                <div class="splash__form">
+                    <h2>Select Your Options</h2>
                     <button class="button--circular rspv-next">
                         <i class="material-icons">arrow_forward</i>
                     </button>
@@ -288,35 +290,81 @@
             </div>
             
             <!-- Choose Host -->
-            <div class="section--app-page next rspv">
+            <div class="section--app-page next rspv pick-host">
                 
                 <div class="">
                     
-                    <h2>Who Invited You?</h2>
+                    <h2 class="pick-host__title">Who Invited You?</h2>
+                    <h3 class="pick-host__subtitle">Don't worry, you can pick more than one person.</h3>
                     
-                    <div>
+                    <div class="pick-host__grid">
                         
-                        <label>
+                        <label class="pick-host__option">
                             
                             <input type="checkbox" name="invitees">
+                            <h3>Arjun</h3>
                             <img src="assets/img/arjun.jpg">
                             
                         </label>
                         
+                        <label class="pick-host__option">
+                            
+                            <input type="checkbox" name="invitees">
+                            <h3>Erin</h3>
+                            <img src="assets/img/erin.jpeg">
+                            
+                        </label>
+                        
+                        <label class="pick-host__option">
+                            
+                            <input type="checkbox" name="invitees">
+                            <h3>Christy</h3>
+                            <img src="assets/img/christy.jpeg">
+                            
+                        </label>
+                        
+                        <label class="pick-host__option">
+                            
+                            <input type="checkbox" name="invitees">
+                            <h3>Ross</h3>
+                            <img src="assets/img/erin.jpeg">
+                            
+                        </label>
+                        
+                        <label class="pick-host__option">
+                            
+                            <input type="checkbox" name="invitees">
+                            <h3>Azia</h3>
+                            <img src="assets/img/erin.jpeg">
+                            
+                        </label>
+                        
+                        <label class="pick-host__option">
+                            
+                            <input type="checkbox" name="invitees">
+                            <h3>Maritza</h3>
+                            <img src="assets/img/erin.jpeg">
+                            
+                        </label>
+                        
                     </div>
+                    
+                    <button class="button--circular rspv-next">
+                        <i class="material-icons">arrow_forward</i>
+                    </button>
                     
                 </div>
                 
             </div>
             
             <!-- Agree To Terms -->
-            <div class="section--app-page next rspv">
+            <div class="section--app-page next rspv terms">
                 
-                <div>
+                <div class="terms__container">
                     
-                    <h2>Age Notice</h2>
+                    <h2 class="terms__title">Terms &amp; Agreement</h2>
                     
-                    <p>You must be 21 years or older to consume alcohol at the party. By continuing you are agreeing that you are at least 21 years of age.</p>
+                    <p class="terms__text">In order to register for the party you must be 21 years or older. By continuing with the reservation process, you are acknowledging that you are at least 21 years of age. Please drink responsibly.</p>
                     
                     <button class="button--circular rspv-next">
                         <i class="material-icons">arrow_forward</i>

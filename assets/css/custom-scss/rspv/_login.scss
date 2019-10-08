@@ -6,16 +6,28 @@
     
     &__form {
         
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100vw;
+        height: 100vw;
+        padding: 7rem 5rem;
+        background-color: rgba(0,0,0,.5);
+        margin: 0 auto;
+        
+        @include respond(phone) {
+            padding: 5rem 2.5rem;
+        }
+        
+    }
+    
+    &__container {
         display: block;
         width: 50rem;
-        padding: 7rem 5rem;
-        background-color: rgba(0,0,0,.4);
         margin: 0 auto;
-        border-radius: 1rem;
         
         @include respond(phone) {
             width: 90%;
-            padding: 5rem 2.5rem;
         }
         
     }
