@@ -1,0 +1,22 @@
+.rspv {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    &__back.button--circular {
+        position: absolute;
+        top: 5rem;
+        left: 5rem;
+        color: var(--bg-color);
+        cursor: pointer;
+        
+        z-index: 100;
+        
+        i {
+            @include centerBox;
+        }
+        
+    }
+    
+}

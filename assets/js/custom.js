@@ -33,22 +33,42 @@ function init() {
         invertCursorElements: [".invertcursor"]
     });
     
-    /*
-    this.backgroundVideo = dreams.backgroundVideo({
-        selector: "#hero",
-        fileName: "arjun",
-        filePath: "assets/img/video/",
-        mp4: true,
-        ogv: false,
-        webm: true,
-        forceMobile: true,
-        fallbackImg: "assets/img/arjun.jpg",
-        opacity: "1",
-        overlay: true,
-        overlayColor: "var(--bg-color)",
-        overlayOpacity: ".75"
-    });
-    */
+    var bookingApp = new initBookingApp();
+    
+    bookingApp.navigate();
+    
+    var preloader = new removePreloader();
+    
+}
+
+function removePreloader() {
+    
+    this.preloader = document.getElementById("preloader-main");
+    
+    this.loader = document.getElementById("preload-ghost");
+    
+    
+    setTimeout(function(){
+        
+        this.loader.style.opacity = "0";
+        
+    }.bind(this), 1500);
+    
+    setTimeout(function(){
+        
+        this.preloader.style.opacity = "0";
+        this.preloader.style.setProperty("pointer-events", "none");
+        document.body.classList.remove("app-active");
+        
+    }.bind(this), 2500);
+    
+    setTimeout(function(){
+        
+        this.preloader.style.display = "none";
+        
+    }.bind(this), 3500);
+    
+    
 }
 
 function initMap() {
@@ -253,12 +273,11 @@ function initMap() {
   }
 ];
     
-    console.log(home);
-    
     var options = {
         zoom: 16,
         center: home,
-        styles: theme
+        styles: theme,
+        disableDefaultUI: true
     };
     
     var selector = document.getElementById("map");
@@ -275,6 +294,147 @@ function initMap() {
     marker.addListener("click", function(){
         window.open(url, '_blank');
     });
+    
+}
+
+function initBookingApp() {
+    
+    // Define User 
+    this.user = {
+        name: undefined,
+        email: undefined,
+        subscribed: false,
+        host: undefined,
+        agreed: false,
+        payment: undefined,
+        status: undefined
+    }
+    
+    this.inputs = {
+        form: document.getElementById('login-form'),
+        name: document.getElementById('name-field'),
+        email: document.getElementById('email-field'),
+        sub: document.getElementById('subscribe')
+     };
+    
+    this.elements = {
+        app: document.getElementById("login-window"),
+        pages: document.querySelectorAll(".rspv"),
+        back: document.getElementById("rspv-back"),
+        open: document.getElementById("rspv-app-launch"),
+        buttons: document.querySelectorAll(".rspv-next")
+    };
+    
+    this.props = {
+        currentPage: 0,
+        validLogin: false
+    };
+    
+    this.navigate = function() {
+        
+        // Simplify Current Page
+        let targets = this.elements.pages;
+        
+        let buttons = this.elements.buttons;
+        
+        // Open App
+        this.openApp = function() {
+            
+            // Fix Body Positioning
+            document.body.classList.add("app-active");
+            
+            // Activate App
+            this.elements.app.classList.remove("inactive");
+            this.elements.app.classList.add("active");
+            
+        }.bind(this);
+        
+        // Close App
+        this.closeApp = function() {
+            
+            // Deactivate App
+            this.elements.app.classList.remove("active");
+            this.elements.app.classList.add("inactive");
+            
+            // Remove Body Positioning
+            document.body.classList.remove("app-active");
+            
+        }.bind(this);
+        
+        // Go Back a Page or Close App
+        this.goBack = function() {
+            
+            if ( this.props.currentPage > 0 ) {
+                
+                // Move Out Home Page
+                targets[this.props.currentPage].classList.remove("current");
+                targets[this.props.currentPage].classList.add("next");
+                
+                // Decrement Page Number
+                this.props.currentPage--;
+                
+                // Move In New page
+                targets[this.props.currentPage].classList.remove("prev");
+                targets[this.props.currentPage].classList.add("current");
+                
+            }
+            
+            else {
+                
+                this.closeApp();
+                
+            }
+            
+        }.bind(this);
+        
+        // Go Forward a Page
+        this.goForward = function() {
+            
+            console.log('yeet');
+            
+            targets[this.props.currentPage].classList.remove("current");
+            targets[this.props.currentPage].classList.add("prev");
+            
+            this.props.currentPage++;
+            
+            targets[this.props.currentPage].classList.remove("next");
+            targets[this.props.currentPage].classList.add("current");
+            
+        }.bind(this);
+        
+        // Prevent Form Submission
+        this.preventSubmit = function(e) {
+            
+            e.preventDefault();
+            
+        }.bind(this);
+        
+        // Add Event Listeners
+        this.addListeners = function() {
+            
+            this.elements.back.addEventListener("click", this.goBack);
+        
+            this.elements.open.addEventListener("click", this.openApp);
+            
+            this.inputs.form.addEventListener("submit", this.preventSubmit);
+            
+            for (var i = 0; i < buttons.length; i++) {
+                
+                buttons[i].addEventListener("click", this.goForward);
+                
+            }
+            
+        }.bind(this);
+        
+        this.addListeners();
+        
+    };
+    
+    
+    this.validateInputs = function() {
+        
+    };
+    
     
 }
 

@@ -1,6 +1,5 @@
 [class^="button"] {
     
-    padding: 1.5rem 4rem;
     border: none;
     text-transform: uppercase;
     font-size: 1.3rem;
@@ -19,9 +18,49 @@
     
     &--circular {
         
+        --button-color: #fff;
+        
+        padding: none;
+        height: 6rem;
+        width: 6rem;
+        border-radius: 50%;
+        position: relative;
+        background-color: var(--button-color);
+        
+        &::before {
+            
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            background-color: var(--button-color);
+            
+            transition: transform .3s ease-in, opacity .4s ease-in;
+            
+        }
+        
+        &:hover {
+            
+            &::before {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+
+        }
+        
+        i {
+            @include centerBox;
+        }
+        
     }
     
     &--primary {
+        
+        padding: 1.5rem 4rem;
         
         color: $white;
         background-color: var(--primary);
@@ -33,6 +72,8 @@
     }
     
     &--secondary {
+        
+        padding: 1.5rem 4rem;
         
         color: var(--primary);
         background-color: transparent;
