@@ -1,7 +1,7 @@
 function init() {
     
-    var dreams = new dream();
-    
+    var dreams = new dream();   
+
     this.countdown = dreams.countdownTimer({
         selector: "#countdown",
         date: new Date("Oct 25, 2019 20:00:00"),
@@ -10,11 +10,15 @@ function init() {
         showMinutes: true,
         showSeconds: true,
         daysText: "days",
+        daysTextSingular: "day",
         hoursText: ":",
+        hoursTextSingular: "",
         minutesText: ":",
+        minutesTextSingular: ":",
         secondsText: "",
+        secondsTextSingular: "",
         compact: true,
-        expiryMessage: "Any minute now"
+        expiryMessage: "It's Party Time"
     });
     
     this.cursor = dreams.dynamicCursor({
@@ -27,17 +31,19 @@ function init() {
         scaleUpFactor: "1.2",
         scaleDownFactor: ".8",
         cursorFadeInDelay: 1000,
-        hideCursorElements: ["a", ".nocursor", "button"],
+        hideCursorElements: ["a", ".nocursor", "button", ".pick-host__option"],
         scaleUpCursorElements: ["h1", "h2", "h3", ".bigcursor"],
         scaleDownCursorElements: ["p"],
         invertCursorElements: [".invertcursor"]
     });
     
-    var bookingApp = new initBookingApp();
+    var app = new wizard();
     
-    bookingApp.navigate();
+    app.navigate();
     
-    var preloader = new removePreloader();
+    app.validate();
+    
+    var preloader = removePreloader();
     
 }
 
@@ -297,9 +303,9 @@ function initMap() {
     
 }
 
-function initBookingApp() {
+function wizard() {
     
-    // Define User 
+    // Define User Fields To Be Submitted
     this.user = {
         name: undefined,
         email: undefined,
@@ -310,6 +316,7 @@ function initBookingApp() {
         status: undefined
     }
     
+    // Define Inputs Elements
     this.inputs = {
         form: document.getElementById('login-form'),
         name: document.getElementById('name-field'),
@@ -317,6 +324,7 @@ function initBookingApp() {
         sub: document.getElementById('subscribe')
      };
     
+    // Define Navigation Elements
     this.elements = {
         app: document.getElementById("login-window"),
         pages: document.querySelectorAll(".rspv"),
@@ -325,16 +333,26 @@ function initBookingApp() {
         buttons: document.querySelectorAll(".rspv-next")
     };
     
+    // Define Navigation Properties
     this.props = {
+        isValid: [],
         currentPage: 0,
-        validLogin: false
+        validName: false,
+        validEmail: false
     };
+    
+    for ( var i = 0; i < this.elements.pages.length; i++ ) {
+        
+        this.props.isValid[i] = false;
+        
+    }
     
     this.navigate = function() {
         
         // Simplify Current Page
         let targets = this.elements.pages;
         
+        // Simplify Button Calls
         let buttons = this.elements.buttons;
         
         // Open App
@@ -390,22 +408,28 @@ function initBookingApp() {
         // Go Forward a Page
         this.goForward = function() {
             
-            console.log('yeet');
-            
-            targets[this.props.currentPage].classList.remove("current");
-            targets[this.props.currentPage].classList.add("prev");
-            
-            this.props.currentPage++;
-            
-            targets[this.props.currentPage].classList.remove("next");
-            targets[this.props.currentPage].classList.add("current");
+            if ( this.props.isValid[this.props.currentPage] ) {
+                
+                targets[this.props.currentPage].classList.remove("current");
+                targets[this.props.currentPage].classList.add("prev");
+
+                this.props.currentPage++;
+
+                targets[this.props.currentPage].classList.remove("next");
+                targets[this.props.currentPage].classList.add("current");
+                
+            }
             
         }.bind(this);
         
         // Prevent Form Submission
-        this.preventSubmit = function(e) {
+        this.moveOnSubmit = function(e) {
             
             e.preventDefault();
+            
+            console.log(this.user);
+            
+            this.goForward();
             
         }.bind(this);
         
@@ -416,7 +440,7 @@ function initBookingApp() {
         
             this.elements.open.addEventListener("click", this.openApp);
             
-            this.inputs.form.addEventListener("submit", this.preventSubmit);
+            this.inputs.form.addEventListener("submit", this.moveOnSubmit);
             
             for (var i = 0; i < buttons.length; i++) {
                 
@@ -426,12 +450,172 @@ function initBookingApp() {
             
         }.bind(this);
         
+        this.testMeOut = function() {
+            console.log("whats up bitches");
+        };
+        
+        // Initialize
         this.addListeners();
         
     };
     
     
-    this.validateInputs = function() {
+    this.validate = function() {
+        
+        let that = this;
+        
+        // Test If Form Is Valid For Submission
+        this.checkForm = function() {
+            
+            // Check First Page
+            if ( this.props.validEmail && this.props.validName ) {
+                
+                this.props.isValid[0] = true;
+                
+            }
+            
+            else {
+                
+                this.props.isValid[0] = false;
+                
+            }
+            
+        }.bind(this);
+        
+        // Check Name Field
+        this.checkName = function () {
+            
+            let regex = /^[a-zA-Z\s]*$/;
+            
+            let value = this.inputs.name.value;
+            
+            if ( regex.test(value) && value ) {
+                
+                // Field Is Valid
+                
+                this.inputs.name.style.setProperty('--border-color', 'var(--valid)');
+                this.inputs.name.style.setProperty('--focus-out', 'var(--valid)');
+                
+                this.props.validName = true;
+                
+            }
+            
+            else {
+                
+                // Field Is Invalid
+                this.inputs.name.style.setProperty('--border-color', 'var(--invalid)');
+                this.inputs.name.style.setProperty('--focus-out', 'var(--invalid)');
+                
+                this.props.validName = false;
+                
+            }
+            
+            this.user.name = value;
+            
+            this.checkForm();
+            
+            
+        }.bind(this);
+        
+        // Check Email Address Field
+        this.checkEmail = function() {
+            
+            let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            
+            let value = this.inputs.email.value;
+            
+            if ( regex.test(value) && value ) {
+                
+                this.inputs.email.style.setProperty('--border-color', 'var(--valid)');
+                this.inputs.email.style.setProperty('--focus-out', 'var(--valid)');
+                
+                this.props.validEmail = true;
+                
+            }
+            
+            else {
+                
+                this.inputs.email.style.setProperty('--border-color', 'var(--invalid)');
+                this.inputs.email.style.setProperty('--focus-out', 'var(--invalid)');
+                
+                this.props.validEmail = false;
+                
+            }
+            
+            this.user.email = value;
+            
+            this.checkForm();
+            
+        }.bind(this);
+        
+        // CHeck For Subscribe Checkbox
+        this.checkSubscribe = function(e) {
+            
+            if ( e.target.checked ) {
+                
+                this.user.subscribed = true;
+                
+            }
+            
+            else {
+                
+                this.user.subscribed = false;
+                
+            }
+            
+        }.bind(this);
+        
+        // Prevent Form Submission
+        this.preventSubmit = function(e) {
+            
+            e.preventDefault();
+            
+            if ( !this.inputs.name.value ) {
+                
+                this.inputs.name.style.setProperty('--border-color', 'var(--invalid)');
+                this.inputs.name.style.setProperty('--focus-out', 'var(--invalid)');
+                
+                this.props.validName = false;
+                
+            }
+            
+            if ( !this.inputs.email.value ) {
+                
+                this.inputs.email.style.setProperty('--border-color', 'var(--invalid)');
+                this.inputs.email.style.setProperty('--focus-out', 'var(--invalid)');
+                
+                this.props.validEmail = false;
+                
+            }
+            
+            this.checkForm();
+            
+        }.bind(this);
+        
+        // Check Options
+        this.checkOptions = function() {};
+        
+        // Add Event Listeners
+        this.addListeners = function() {
+            
+            // On Input
+            this.inputs.name.addEventListener("input", this.checkName);
+            this.inputs.email.addEventListener("input", this.checkEmail);
+            
+            // On Blur
+            this.inputs.name.addEventListener("blur", this.checkName);
+            this.inputs.email.addEventListener("blur", this.checkEmail);
+            
+            // Checkbox Listener
+            this.inputs.sub.addEventListener("change", this.checkSubscribe);
+            
+            // On Submit
+            this.inputs.form.addEventListener("submit", this.preventSubmit);
+            
+        }.bind(this);
+        
+        // Initialize
+        this.addListeners();
         
     };
     

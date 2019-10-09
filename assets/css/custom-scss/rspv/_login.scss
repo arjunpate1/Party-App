@@ -23,7 +23,7 @@
     
     &__container {
         display: block;
-        width: 50rem;
+        width: 45rem;
         margin: 0 auto;
         
         @include respond(phone) {
@@ -34,6 +34,9 @@
     
     &__input {
         
+        --border-color: var(--primary);
+        --focus-out: var(--font-color);
+        
         display: block;
         width: 100%;
         padding: 1.5rem 3rem;
@@ -42,12 +45,12 @@
         
         margin-bottom: 3rem;
         
-        border: 2px solid var(--font-color);
+        border: 3px solid var(--focus-out);
         transition: $quick;
         
         &:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--border-color);
         }
         
     }

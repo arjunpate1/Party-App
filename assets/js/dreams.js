@@ -121,9 +121,13 @@ function dream() {
         showMinutes: bool
         showSeconds: bool
         daysText: string
+        daysTextSingular: string
         hoursText: string
+        hoursTextSingular: string
         minutesText: string
+        minutesTexSingulart: string
         secondsText: string
+        secondsTextSingular: string
         expiryMessage: string
 
         */
@@ -180,26 +184,26 @@ function dream() {
 
             let text = "";
 
-            if (props.showDays) {
-                text = text + timer.days + " " + props.daysText + " ";
+            if (props.showDays && timer.days != 0) {
+                text = text + timer.days + " " + ( timer.days > 1 ?  props.daysText : props.daysTextSingular ) + " ";
             }
 
             if (props.compact) {
-                text = text + "and " + timer.hours + ":" + timer.minutes + ":" + timer.seconds;
+                text = text + ( timer.days != 0 ? "and " : "" ) + timer.hours + ":" + timer.minutes + ":" + timer.seconds;
             }
 
             else {
 
                 if (props.showHours) {
-                    text = text + timer.hours + " " + props.hoursText + " ";
+                    text = text + timer.hours + " " + ( timer.hours == '01' ? props.hoursText : props.hoursTextSingular ) + " ";
                 }
 
                 if (props.showMinutes) {
-                    text = text + timer.minutes + " " + props.minutesText + " ";
+                    text = text + timer.minutes + " " + ( timer.minutes == '01' ? props.minutesText : props.minutesTextSingular ) + " ";
                 }
 
                 if (props.showSeconds) {
-                    text = text + timer.seconds + " " + props.secondsText;
+                    text = text + timer.seconds + " " + ( timer.seconds == '01' ?  props.secondsText : props.secondsTextSingular );
                 }
 
             }
