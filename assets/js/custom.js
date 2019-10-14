@@ -1,8 +1,11 @@
 function init() {
     
+    // Dreams Framework Functions
     var dreams = new dream();   
+    
+    dreams.init();
 
-    this.countdown = dreams.countdownTimer({
+    dreams.countdownTimer({
         selector: "#countdown",
         date: new Date("Oct 25, 2019 20:00:00"),
         showDays: true,
@@ -21,7 +24,7 @@ function init() {
         expiryMessage: "It's Party Time"
     });
     
-    this.cursor = dreams.dynamicCursor({
+    dreams.dynamicCursor({
         useDefaultStyle: true,
         size: "6rem",
         color: "var(--primary)",
@@ -31,18 +34,22 @@ function init() {
         scaleUpFactor: "1.2",
         scaleDownFactor: ".8",
         cursorFadeInDelay: 1000,
-        hideCursorElements: ["a", ".nocursor", "button", ".pick-host__option"],
+        hideCursorElements: ["a", ".nocursor", "button", ".pick-host__option", ".payment__radio"],
         scaleUpCursorElements: ["h1", "h2", "h3", ".bigcursor"],
         scaleDownCursorElements: ["p"],
         invertCursorElements: [".invertcursor"]
     });
     
+    
+    // App Wizard
     var app = new wizard();
     
     app.navigate();
     
     app.validate();
     
+    
+    // Remove Preloader
     var preloader = removePreloader();
     
 }
@@ -310,10 +317,9 @@ function wizard() {
         name: undefined,
         email: undefined,
         subscribed: false,
-        host: undefined,
-        agreed: false,
+        hosts: [],
         payment: undefined,
-        status: undefined
+        status: 'unregistered'
     }
     
     // Define Inputs Elements
@@ -321,7 +327,9 @@ function wizard() {
         form: document.getElementById('login-form'),
         name: document.getElementById('name-field'),
         email: document.getElementById('email-field'),
-        sub: document.getElementById('subscribe')
+        sub: document.getElementById('subscribe'),
+        hosts: document.getElementsByName('invitees'),
+        payments: document.getElementsByName('payment-options')
      };
     
     // Define Navigation Elements
@@ -346,6 +354,9 @@ function wizard() {
         this.props.isValid[i] = false;
         
     }
+    
+    // Default Valid Slides
+    this.props.isValid[2] = true;
     
     this.navigate = function() {
         
@@ -382,7 +393,13 @@ function wizard() {
         // Go Back a Page or Close App
         this.goBack = function() {
             
-            if ( this.props.currentPage > 0 ) {
+            if ( this.props.currentPage == ( this.elements.pages.length - 1 ) ) {
+                
+                this.closeApp();
+                
+            }
+            
+            else if ( this.props.currentPage > 0 ) {
                 
                 // Move Out Home Page
                 targets[this.props.currentPage].classList.remove("current");
@@ -408,6 +425,13 @@ function wizard() {
         // Go Forward a Page
         this.goForward = function() {
             
+            if ( this.props.currentPage == 1 && !this.props.isValid[1] ) {
+                
+                document.getElementById('select-host-error').classList.remove('inactive');
+                document.getElementById('select-host-error').classList.add('active');
+                
+            }
+            
             if ( this.props.isValid[this.props.currentPage] ) {
                 
                 targets[this.props.currentPage].classList.remove("current");
@@ -427,7 +451,7 @@ function wizard() {
             
             e.preventDefault();
             
-            console.log(this.user);
+            this.checkIfUserExists();
             
             this.goForward();
             
@@ -449,10 +473,6 @@ function wizard() {
             }
             
         }.bind(this);
-        
-        this.testMeOut = function() {
-            console.log("whats up bitches");
-        };
         
         // Initialize
         this.addListeners();
@@ -548,6 +568,21 @@ function wizard() {
             
         }.bind(this);
         
+        // Check if User Already Registered
+        this.checkIfUserExists = function() {
+            
+            let duplicateError = document.getElementById('user-duplicate');
+            
+            let alreadyRegistered = false;
+            
+            // Check if User is Already Registered
+            if ( alreadyRegistered ) {
+                this.props.validEmail = false;
+                duplicateError.textContent = "Sorry, you've already registered for the party with that email";
+            }
+            
+        };
+        
         // CHeck For Subscribe Checkbox
         this.checkSubscribe = function(e) {
             
@@ -592,8 +627,49 @@ function wizard() {
             
         }.bind(this);
         
-        // Check Options
-        this.checkOptions = function() {};
+        // Check Hosts
+        this.checkHosts = function(e) {
+            
+            let targets = this.inputs.hosts;
+            
+            let hosts = [];
+            
+            let error = document.getElementById('select-host-error');
+            
+            for ( var i = 0; i < targets.length; i++ ) {
+                
+                if ( targets[i].checked ) {
+                    
+                    hosts.push(targets[i].value);
+                    
+                }
+                
+            }
+            
+            this.user.hosts = hosts;
+            
+            if ( !hosts.length ) {
+                this.props.isValid[1] = false;
+            }
+            
+            else {
+                this.props.isValid[1] = true;
+                error.classList.remove('active');
+                error.classList.add('inactive');
+            }
+            
+        }.bind(this);
+        
+        // Check Payment Choice
+        this.checkPayments = function(e) {
+            
+            if ( e.target.checked ) {
+                this.user.payment = e.target.value;
+            }
+            
+            this.props.isValid[3] = true;
+            
+        }.bind(this);
         
         // Add Event Listeners
         this.addListeners = function() {
@@ -612,6 +688,20 @@ function wizard() {
             // On Submit
             this.inputs.form.addEventListener("submit", this.preventSubmit);
             
+            // Host Select
+            for ( var i = 0; i < this.inputs.hosts.length; i++ ) {
+                
+                this.inputs.hosts[i].addEventListener("change", this.checkHosts);
+                
+            }
+            
+            // Payment Select
+            for ( var i = 0; i < this.inputs.payments.length; i++ ) {
+                
+                this.inputs.payments[i].addEventListener("change", this.checkPayments);
+                
+            } 
+            
         }.bind(this);
         
         // Initialize
@@ -619,7 +709,25 @@ function wizard() {
         
     };
     
+}
+
+function serverSide() {
+    
+    var nightmare = new dream();
+    
+    this.checkUser = function() {};
+    
+    this.dbPush() = function() {};
+    
+    this.attachListeners() = function() {};
     
 }
 
 window.addEventListener("load", init);
+
+
+
+
+
+
+

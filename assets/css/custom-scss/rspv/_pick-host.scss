@@ -1,5 +1,9 @@
 .pick-host {
     
+    &__container {
+        position: relative;
+    }
+    
     &__title {
         font-size: 4rem;
         color: var(--primary);
@@ -76,6 +80,32 @@
         
         &:hover input:checked ~ h3 {
             color: var(--primary);
+        }
+    }
+    
+    &__error {
+        position: absolute;
+        bottom: 8rem;
+        
+        width: 100%;
+        text-align: center;
+        
+        text-transform: uppercase;
+        letter-spacing: .2rem;
+        
+        pointer-events: none;
+        user-select: none;
+        
+        transition: all .3s ease-in;
+        
+        &.inactive {
+            transform: scale(.5);
+            opacity: 0;
+        }
+        
+        &.active {
+            transform: scale(1);
+            opacity: 1;
         }
     }
     

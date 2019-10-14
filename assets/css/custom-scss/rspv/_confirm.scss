@@ -1,0 +1,71 @@
+.confirmation {
+    
+    &__container {
+        
+        width: 60%;
+        margin: 0 auto;
+        
+    }
+    
+    &__title {
+        
+        text-transform: uppercase;
+        text-align: center;
+        letter-spacing: .7rem;
+        color: var(--primary);
+        font-size: 3rem;
+        margin-bottom: 3rem;
+        
+    }
+    
+    &__text {
+        
+        text-align: center;
+        width: 80%;
+        margin: 0 auto 4rem auto;
+        
+    }
+    
+    &__payment {
+        
+        background-color: var(--bg-color-alt);
+        padding: 5rem 8rem;
+        
+        hr {
+            width: 10rem;
+            height: .5rem;
+            border: none;
+            background-color: var(--primary);
+            margin: 2rem 0;
+        }
+        
+    }
+    
+    &__grid {
+        
+        display: grid;
+        grid-template-columns: auto auto;
+        
+        h4 {
+            
+            text-transform: uppercase;
+            letter-spacing: .3rem;
+            font-size: 1.4rem;
+            
+        }
+        
+    }
+    
+    &__message {
+        
+        margin-bottom: 3rem;
+        
+    }
+    
+    .button--primary {
+        
+        margin-top: 5rem;
+        
+    }
+    
+}

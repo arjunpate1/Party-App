@@ -16,7 +16,7 @@
         <!-- STYLESHEETS -->
         <link href="assets/css/dreams.css" rel="stylesheet" type="text/css">
         <link href="assets/css/custom.css" rel="stylesheet" type="text/css">
-        
+
     </head>
     
     <body class="app-active">
@@ -113,6 +113,8 @@
             <h2 class="venue__title">Party Location</h2>
             <p class="venue__address">11007 Siting Pace</p>
             <p class="venue__address">Orlando, FL 32825</p>
+            <p>Free street parking is available. Space is limited.</p>
+            <p>Please carpool or Uber if possible.</p>
             
             <div class="venue__map invertcursor">
                 <div id="map"></div>
@@ -271,7 +273,9 @@
                         </label>
                     </div>
                     
-                    <button class="button--circular rspv-next">
+                    <p class="splash__duplicate" id="user-duplicate"></p>
+                    
+                    <button class="button--circular" type="submit">
                         <i class="material-icons">arrow_forward</i>
                     </button>
                     
@@ -279,23 +283,10 @@
                 
             </div>
             
-            <!-- Enter Information -->
-            <div class="section--app-page next rspv">
-                
-                <div class="splash__form">
-                    <h2>Select Your Options</h2>
-                    <button class="button--circular rspv-next">
-                        <i class="material-icons">arrow_forward</i>
-                    </button>
-                    
-                </div>
-                
-            </div>
-            
             <!-- Choose Host -->
             <div class="section--app-page next rspv pick-host">
                 
-                <div class="">
+                <div class="pick-host__container">
                     
                     <h2 class="pick-host__title">Who Invited You?</h2>
                     <h3 class="pick-host__subtitle">Don't worry, you can pick more than one person.</h3>
@@ -304,7 +295,7 @@
                         
                         <label class="pick-host__option">
                             
-                            <input type="checkbox" name="invitees">
+                            <input type="checkbox" name="invitees" value="Arjun">
                             <img src="assets/img/arjun.jpg">
                             <h3>Arjun</h3>
                             
@@ -312,7 +303,7 @@
                         
                         <label class="pick-host__option">
                             
-                            <input type="checkbox" name="invitees">
+                            <input type="checkbox" name="invitees" value="Erin">
                             <img src="assets/img/erin.jpeg">
                             <h3>Erin</h3>
                             
@@ -320,7 +311,7 @@
                         
                         <label class="pick-host__option">
                             
-                            <input type="checkbox" name="invitees">
+                            <input type="checkbox" name="invitees" value="Christy">
                             <img src="assets/img/christy.jpeg">
                             <h3>Christy</h3>
                             
@@ -328,7 +319,7 @@
                         
                         <label class="pick-host__option">
                             
-                            <input type="checkbox" name="invitees">
+                            <input type="checkbox" name="invitees" value="Ross">
                             <img src="assets/img/ross.jpg">
                             <h3>Ross</h3>
                             
@@ -336,7 +327,7 @@
                         
                         <label class="pick-host__option">
                             
-                            <input type="checkbox" name="invitees">
+                            <input type="checkbox" name="invitees" value="Azia">
                             <img src="assets/img/azia.jpg">
                             <h3>Azia</h3>
                             
@@ -344,7 +335,7 @@
                         
                         <label class="pick-host__option">
                             
-                            <input type="checkbox" name="invitees">
+                            <input type="checkbox" name="invitees" value="Maritza">
                             <img src="assets/img/erin.jpeg">
                             <h3>Maritza</h3>
                             
@@ -352,7 +343,7 @@
                         
                         <label class="pick-host__option">
                             
-                            <input type="checkbox" name="invitees">
+                            <input type="checkbox" name="invitees" value="Bradley">
                             <img src="assets/img/bradley.jpg">
                             <h3>Bradley</h3>
                             
@@ -360,12 +351,16 @@
                         
                         <label class="pick-host__option">
                             
-                            <input type="checkbox" name="invitees">
+                            <input type="checkbox" name="invitees" value="Keanu">
                             <img src="assets/img/keanu.jpg">
                             <h3>Keanu</h3>
                             
                         </label>
                         
+                    </div>
+                    
+                    <div class="pick-host__error inactive" id="select-host-error">
+                        <h4>You have to pick someone.</h4>
                     </div>
                     
                     <button class="button--circular rspv-next">
@@ -394,18 +389,129 @@
             </div>
             
             <!-- Payment Options -->
-            <div class="section--app-page next rspv">
+            <div class="section--app-page next rspv payment">
                 
-                <div>
+                <div class="payment__container">
                     
-                    <h2></h2>
+                    <h2 class="payment__title">Pick Your Posion</h2>
+                    
+                    <div class="payment__form">
+                        
+                        <!-- Venmo -->
+                        <label class="payment__option">
+                            
+                            <input type="radio" name="payment-options" value="prepay">
+                            
+                            <!-- Faux Radio Button -->
+                            <div class="payment__radio">
+                                
+                                <div><span></span></div>
+                                
+                            </div>
+                            
+                            <!-- Details -->
+                            <div class="payment__details">
+                                <h3>Pre-Pay</h3>
+                                <p>Send $5 via Venmo, Paypal, Apple Pay, or Google Pay</p>
+                            </div>
+                            
+                            <h2 class="payment__price">$5</h2>
+                            
+                        </label>
+                        
+                        <!-- Pay At Door -->
+                        <label class="payment__option">
+                            
+                            <input type="radio" name="payment-options" value="door">
+                            
+                            <!-- Faux Radio Button -->
+                            <div class="payment__radio">
+                                
+                                <div><span></span></div>
+                                
+                            </div>
+                            
+                            <!-- Details -->
+                            <div class="payment__details">
+                                <h3>Pay At The Door</h3>
+                                <p>Pay $10 at the door when you arrive</p>
+                            </div>
+                            
+                            <h2 class="payment__price">$10</h2>
+                            
+                        </label>
+                        
+                        <!-- BYOB -->
+                        <label class="payment__option">
+                            
+                            <input type="radio" name="payment-options" value="byob">
+                            
+                            <!-- Faux Radio Button -->
+                            <div class="payment__radio">
+                                
+                                <div><span></span></div>
+                                
+                            </div>
+                            
+                            <!-- Details -->
+                            <div class="payment__details">
+                                <h3>Bring Some Alcohol</h3>
+                                <p>Show up with a pack of drinks or bottle to the and get in for free</p>
+                            </div>
+                            
+                            <h2 class="payment__price">$0</h2>
+                            
+                        </label>
+                        
+                    </div>
+                    
+                    <button class="button--primary rspv-next">
+                        Finish
+                    </button>
                     
                 </div>
                 
             </div>
             
             <!-- Invite Confirmation -->
-            <div class="section--app-page next rspv">
+            <div class="section--app-page next rspv confirmation">
+                
+                <div class="confirmation__container">
+                    
+                    <h2 class="confirmation__title">Ready To Party</h2>
+                    <p class="confirmation__text">Thanks for making your reservation. We look forward to seeing you at the party. When you arrive at the party, please have your ticket ready.</p>
+                    
+                    <!-- if Send Payment -->
+                    <div class="confirmation__payment">
+                        
+                        <h2>Please Note</h2>
+                        
+                        <hr>
+                        
+                        <p class="confirmation__message">Your reservation has been successfully made. Please send $5 using any one of the payment methods below. Within 24 hours of sending the payment you'll recieve a confirmation email that your ticket is ready to view.</p>
+                        
+                        <div class="confirmation__grid">
+                            
+                            <div>
+                                <h4>Venmo</h4>
+                                <p>@arjunpate1</p>
+                            </div>
+                            
+                            <div>
+                                <h4>PayPal, Apple Pay &amp; Google Pay</h4>
+                                <p>arjunsamirpatel100@gmail.com</p>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                    <button class="button--primary">
+                        View Ticket
+                    </button>
+                    
+                </div>
+                
             </div>
             
         </section>
@@ -445,8 +551,8 @@
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWxXXTL-o21WMGZy01jsZJhEr6yQ3QkWM&callback=initMap"></script>
         <script src="assets/js/custom.js"></script>
         
+        <!-- USE PHP TO UPDATE OBJECT HERE IF SESSION IS SET -->
         
-
     </body>
     
 </html>

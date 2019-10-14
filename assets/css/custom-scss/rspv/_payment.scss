@@ -1,0 +1,121 @@
+.payment {
+    
+    &__container {
+        width: 60%;
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    &__title {
+        font-size: 4rem;
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: .7rem;
+        margin-bottom: 5rem;
+        text-align: center;
+    }
+    
+    &__form {
+        width: 90%;
+        margin: 0 auto;
+    }
+    
+    &__option {
+        
+        background-color: var(--bg-color-alt);
+        display: grid;
+        grid-template-columns: 15rem auto;
+        cursor: pointer;
+        position: relative;
+        margin-bottom: 2rem;
+        
+        &:last-child {
+            margin-bottom: 5rem;
+        }
+        
+        input {
+            display: none;
+        }
+        
+    }
+    
+    input:checked + &__radio {
+        
+        div {
+            
+            border-color: var(--primary);
+            
+        }
+        
+        span {
+            
+            opacity: 1;
+            
+        }
+        
+    }
+    
+    input:checked ~ &__details {
+        h3 {
+            color: var(--primary);
+        }
+    }
+    
+    &__radio {
+        position: relative;
+        height: 12rem;
+        
+        div {
+            height: 4rem;
+            width: 4rem;
+            @include centerBox;
+            border: 4px solid var(--font-color);
+            border-radius: 50%;
+            transition: $quick;
+        }
+        
+        span {
+            @include centerBox;
+            height: 2.5rem;
+            width: 2.5rem;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0;
+            
+            transition: $quick;
+        }
+        
+    }
+    
+    &__details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+        h3 {
+            color: var(--font-color);
+            text-transform: uppercase;
+            letter-spacing: .3rem;
+            margin-bottom: .25rem;
+            transition: $quick;
+        }
+        
+        p {
+            width: calc(100% - 15rem);
+        }
+    
+    }
+    
+    &__price {
+        
+        position: absolute;
+        top: 50%;
+        right: 5rem;
+        transform: translateY(-50%);
+        
+        font-size: 4rem;
+        opacity: .3;
+        
+    }
+    
+}

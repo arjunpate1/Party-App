@@ -100,6 +100,33 @@ function dream() {
         // One Day This Will Do Something
     };
     
+    this.ajax = function(request) {
+        
+        /*
+        
+        file: string
+        type: string 'GET' or 'POST'
+        onSuccess: function
+        
+        */
+        
+        let xhttp = new XMLHttpRequest();
+        
+        xhttp.onreadystatechange = function(){
+            
+            if ( this.readyState == 4 && this.status == 200 ) {
+                
+                request.onSuccess();
+                
+            }
+            
+        };
+        
+        xhttp.open( request.type, request.file, true );
+        xhttp.send();
+        
+    };
+    
     
     
 // DREAMS COMPONENT CLASSES
@@ -624,8 +651,13 @@ function dream() {
     
 // INIT DREAMS
     
-    // Call Browser Props
-    this.getBrowserProps();
+    // Init Dreams
+    this.init = function() {
+        
+        this.getBrowserProps();
+        
+    }.bind(this);
+    
     
     
     
