@@ -1,13 +1,17 @@
 .terms {
     
+    @include respond(phone) {
+        padding: 12rem 3rem;
+    }
+    
     &__container {
         text-align: center;
-        width: 70rem;
+        max-width: 70rem;
         margin: 0 auto;
     }
     
     &__title {
-        font-size: 4rem;
+        font-size: 3rem;
         color: var(--primary);
         text-transform: uppercase;
         letter-spacing: .7rem;

@@ -1,13 +1,35 @@
 .payment {
     
+    &.rspv {
+        @include respond(phone) {
+            display: block;
+            padding: 12rem 0;
+        }
+    }
+    
     &__container {
         width: 60%;
         margin: 0 auto;
         position: relative;
+        
+        @include respond(tab-port) {
+            width: 80%;
+        }
+        
+        @include respond(phone) {
+            width: 100%;
+            padding: 0 3rem;
+        }
+        
+        .button--primary {
+            @include respond(phone) {
+                margin-bottom: 12rem;
+            }
+        }
     }
     
     &__title {
-        font-size: 4rem;
+        font-size: 3rem;
         color: var(--primary);
         text-transform: uppercase;
         letter-spacing: .7rem;
@@ -18,6 +40,20 @@
     &__form {
         width: 90%;
         margin: 0 auto;
+        @include respond(phone) {
+            width: 100%;
+        }
+    }
+    
+    &__space {
+        
+        height: 0;
+        width: 100%;
+        
+        @include respond(phone) {
+            height: 12rem;
+        }
+        
     }
     
     &__option {
@@ -28,6 +64,10 @@
         cursor: pointer;
         position: relative;
         margin-bottom: 2rem;
+        
+        @include respond(phone) {
+            grid-template-columns: 8rem auto;
+        }
         
         &:last-child {
             margin-bottom: 5rem;
@@ -72,6 +112,11 @@
             border: 4px solid var(--font-color);
             border-radius: 50%;
             transition: $quick;
+            
+            @include respond(phone) {
+                height: 3rem;
+                width: 3rem;
+            }
         }
         
         span {
@@ -83,6 +128,11 @@
             opacity: 0;
             
             transition: $quick;
+            
+            @include respond(phone) {
+                height: 1.4rem;
+                width: 1.4rem;
+            }
         }
         
     }
@@ -102,6 +152,11 @@
         
         p {
             width: calc(100% - 15rem);
+            
+            @include respond(phone) {
+                width: 100%;
+                padding-right: 3rem;
+            }
         }
     
     }
@@ -115,6 +170,12 @@
         
         font-size: 4rem;
         opacity: .3;
+        
+        @include respond(phone) {
+            font-size: 7rem;
+            opacity: .05;
+            right: 1rem;
+        }
         
     }
     

@@ -13,10 +13,56 @@
         
         z-index: 100;
         
+        @include respond(phone) {
+            top: 2rem;
+            left: 2rem;
+        }
+        
         i {
             @include centerBox;
         }
         
     }
     
+}
+
+.v-ticket {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    &__back.button--circular {
+        position: absolute;
+        top: 5rem;
+        left: 5rem;
+        color: var(--bg-color);
+        cursor: pointer;
+        
+        z-index: 100;
+        
+        i {
+            @include centerBox;
+        }
+        
+    }
+    
+}
+
+.section {
+    
+    display: block;
+    padding: 20rem;
+    
+    @include respond(tab-land) {
+        padding: 20rem 10rem;
+    }
+    
+    @include respond(tab-port) {
+        padding: 15rem 5rem;
+    }
+    
+    @include respond(phone) {
+        padding: 12rem 0;
+    }
 }

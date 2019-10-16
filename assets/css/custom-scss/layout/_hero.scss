@@ -10,7 +10,13 @@
         @include respond(phone) {
             line-height: 1.2;
             margin-bottom: 2rem;
+            font-size: 6rem;
         }
+        
+        @include respond(iphone) {
+            font-size: 5rem;
+        }
+        
     }
     
     &__subtitle {

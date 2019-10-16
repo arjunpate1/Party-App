@@ -48,6 +48,7 @@ function init() {
     
     app.validate();
     
+    app.getSession();
     
     // Remove Preloader
     var preloader = removePreloader();
@@ -294,8 +295,11 @@ function initMap() {
     };
     
     var selector = document.getElementById("map");
+    var selector2 = document.getElementById("map-2");
     
     var map = new google.maps.Map(selector, options);
+    
+    var map2 = new google.maps.Map(selector2, options);
     
     var marker = new google.maps.Marker({
         position: home,
@@ -304,7 +308,18 @@ function initMap() {
         animation:google.maps.Animation.BOUNCE
     });
     
+    var marker2 = new google.maps.Marker({
+        position: home,
+        map: map2,
+        title: "Arjun's House",
+        animation:google.maps.Animation.BOUNCE
+    });
+    
     marker.addListener("click", function(){
+        window.open(url, '_blank');
+    });
+    
+    marker2.addListener("click", function(){
         window.open(url, '_blank');
     });
     
@@ -319,7 +334,8 @@ function wizard() {
         subscribed: false,
         hosts: [],
         payment: undefined,
-        status: 'unregistered'
+        status: 'unregistered',
+        code: undefined
     }
     
     // Define Inputs Elements
@@ -329,16 +345,38 @@ function wizard() {
         email: document.getElementById('email-field'),
         sub: document.getElementById('subscribe'),
         hosts: document.getElementsByName('invitees'),
-        payments: document.getElementsByName('payment-options')
+        payments: document.getElementsByName('payment-options'),
+        temail: document.getElementById('tix-email-field'),
+        tform: document.getElementById('tix-login-form')
      };
+    
+    this.outputs = {
+        msg: document.getElementById('tix-msg'),
+        name: document.getElementById('u-name'),
+        email: document.getElementById('u-email'),
+        code: document.getElementById('u-code'),
+        status: document.getElementById('u-status')
+    }
     
     // Define Navigation Elements
     this.elements = {
         app: document.getElementById("login-window"),
+        ticket: document.getElementById("ticket-window"),
+        userinfo: document.getElementById('logout-window'),
         pages: document.querySelectorAll(".rspv"),
         back: document.getElementById("rspv-back"),
         open: document.getElementById("rspv-app-launch"),
-        buttons: document.querySelectorAll(".rspv-next")
+        buttons: document.querySelectorAll(".rspv-next"),
+        openTicket: document.getElementById('ticket-view-launch'),
+        openUser: document.getElementById('logout-btn'),
+        complete: document.getElementById('rspv-complete'),
+        closeTicket: document.getElementById('tix-back'),
+        closeUser: document.getElementById('logout-back'),
+        tixPages: document.querySelectorAll(".v-ticket"),
+        prepayInfo: document.getElementById('prepay-info'),
+        logoutBack: document.getElementById('logout-back'),
+        userTix: document.getElementById('ticket-view-launch-2'),
+        goodbye: document.getElementById('logout-app-btn')
     };
     
     // Define Navigation Properties
@@ -346,7 +384,10 @@ function wizard() {
         isValid: [],
         currentPage: 0,
         validName: false,
-        validEmail: false
+        validEmail: false,
+        showTix: false,
+        tixViewed: false,
+        isRegistered: false
     };
     
     for ( var i = 0; i < this.elements.pages.length; i++ ) {
@@ -365,6 +406,48 @@ function wizard() {
         
         // Simplify Button Calls
         let buttons = this.elements.buttons;
+        
+        // Open Ticket
+        this.openTicket = function() {
+            
+            document.body.classList.add("app-active");
+            
+            this.elements.ticket.classList.remove("inactive");
+            this.elements.ticket.classList.add("active");
+            
+            this.displayTix();
+            
+        }.bind(this);
+        
+        // Close Ticket
+        this.closeTicket = function() {
+            
+            this.elements.ticket.classList.remove("active");
+            this.elements.ticket.classList.add("inactive");
+            
+            document.body.classList.remove("app-active");
+            
+        }.bind(this);
+        
+        // Open User
+        this.openUser = function() {
+            
+            document.body.classList.add("app-active");
+            
+            this.elements.userinfo.classList.remove("inactive");
+            this.elements.userinfo.classList.add("active");
+            
+        }.bind(this);
+        
+        // Close user
+        this.closeUser = function() {
+            
+            this.elements.userinfo.classList.remove("active");
+            this.elements.userinfo.classList.add("inactive");
+            
+            document.body.classList.remove("app-active");
+            
+        }.bind(this);
         
         // Open App
         this.openApp = function() {
@@ -432,6 +515,10 @@ function wizard() {
                 
             }
             
+            if ( this.props.currentPage == ( this.elements.pages.length - 2 ) ) {
+                this.register();
+            }
+            
             if ( this.props.isValid[this.props.currentPage] ) {
                 
                 targets[this.props.currentPage].classList.remove("current");
@@ -453,7 +540,77 @@ function wizard() {
             
             this.checkIfUserExists();
             
-            this.goForward();
+        }.bind(this);
+        
+        // View Ticket After Registration
+        this.viewTix = function() {
+            
+            this.props.showTix = true;
+            
+            this.closeApp();
+            this.openTicket();
+            
+        }.bind(this);
+        
+        // Find Ticket
+        this.findTix = function() {
+            
+            this.closeUser();
+            this.openTicket();
+            
+        }.bind(this);
+        
+        // Control Ticket View
+        this.displayTix = function() {
+            
+            this.outputs.name.textContent = this.user.name;
+            this.outputs.email.textContent = this.user.email;
+            this.outputs.code.textContent = this.user.code;
+            this.outputs.status.textContent = this.user.status;
+            
+            if ( this.props.showTix && !this.props.tixViewed ) {
+                
+                this.elements.tixPages[0].classList.remove("current");
+                this.elements.tixPages[0].classList.add("prev");
+                
+                this.elements.tixPages[1].classList.remove("next");
+                this.elements.tixPages[1].classList.add("current");
+                
+                this.props.tixViewed = true;
+                
+            }
+            
+        }.bind(this);
+        
+        this.logout = function() {
+            
+            let hello = document.getElementById('goodbye-fo');
+            let goodbye = document.getElementById('goodbye-fi');
+            
+            hello.classList.remove("active");
+            hello.classList.add("inactive");
+            
+            this.loggedOut();
+            
+            setTimeout(function(){
+                
+                goodbye.classList.remove("inactive");
+                goodbye.classList.add("active");
+                
+            }, 750);
+            
+            setTimeout(this.closeUser, 2000);
+            
+            // Reset It
+            setTimeout(function(){
+                
+                hello.classList.remove("inactive");
+                hello.classList.add("active");
+                
+                goodbye.classList.remove("active");
+                goodbye.classList.add("inactive");
+                
+            }, 3000);
             
         }.bind(this);
         
@@ -464,7 +621,21 @@ function wizard() {
         
             this.elements.open.addEventListener("click", this.openApp);
             
+            this.elements.openTicket.addEventListener("click", this.openTicket);
+            
             this.inputs.form.addEventListener("submit", this.moveOnSubmit);
+            
+            this.elements.complete.addEventListener("click", this.viewTix);
+            
+            this.elements.closeTicket.addEventListener("click", this.closeTicket);
+            
+            this.elements.openUser.addEventListener("click", this.openUser);
+            
+            this.elements.logoutBack.addEventListener("click", this.closeUser);
+            
+            this.elements.userTix.addEventListener("click", this.findTix);
+            
+            this.elements.goodbye.addEventListener("click", this.logout);
             
             for (var i = 0; i < buttons.length; i++) {
                 
@@ -478,7 +649,6 @@ function wizard() {
         this.addListeners();
         
     };
-    
     
     this.validate = function() {
         
@@ -568,22 +738,71 @@ function wizard() {
             
         }.bind(this);
         
+        this.checkTixEmail = function() {
+            
+            let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            
+            let value = this.inputs.temail.value;
+            
+            if ( regex.test(value) && value ) {
+                
+                this.inputs.temail.style.setProperty('--border-color', 'var(--valid)');
+                this.inputs.temail.style.setProperty('--focus-out', 'var(--valid)');
+                
+                //this.props.validEmail = true;
+                
+            }
+            
+            else {
+                
+                this.inputs.temail.style.setProperty('--border-color', 'var(--invalid)');
+                this.inputs.temail.style.setProperty('--focus-out', 'var(--invalid)');
+                
+                //this.props.validEmail = false;
+                
+            }
+            
+            //this.user.email = value;
+            
+        }.bind(this);
+        
         // Check if User Already Registered
         this.checkIfUserExists = function() {
             
             let duplicateError = document.getElementById('user-duplicate');
             
-            let alreadyRegistered = false;
+            let looksGood = false;
             
-            // Check if User is Already Registered
-            if ( alreadyRegistered ) {
-                this.props.validEmail = false;
-                duplicateError.textContent = "Sorry, you've already registered for the party with that email";
-            }
+            let email = this.user.email;
+            
+            let that = this;
+            
+            this.search({
+                email: email,
+                
+                onSuccess: function() {
+                    
+                    this.props.validEmail = false;
+                    this.inputs.email.style.setProperty('--border-color', 'var(--invalid)');
+                    this.inputs.email.style.setProperty('--focus-out', 'var(--invalid)');
+                    duplicateError.textContent = "Sorry, you've already registered for the party with that email";
+                    this.checkForm();
+                    
+                }.bind(this),
+                
+                
+                onFail: function() {
+                    
+                    this.props.validEmail = true;
+                    this.checkForm();
+                    this.goForward();
+                    
+                }.bind(this)
+            });
             
         };
         
-        // CHeck For Subscribe Checkbox
+        // Check For Subscribe Checkbox
         this.checkSubscribe = function(e) {
             
             if ( e.target.checked ) {
@@ -669,6 +888,67 @@ function wizard() {
             
             this.props.isValid[3] = true;
             
+            if ( this.user.payment == 'prepay' ) {
+                this.user.status = "Pending";
+                this.outputs.msg.textContent = ".";
+                this.elements.prepayInfo.classList.remove("inactive");
+                this.elements.prepayInfo.classList.add("active");
+            }
+            
+            else if ( this.user.payment == 'door' ) {
+                this.user.status = "Pay At Door";
+                this.outputs.msg.textContent = " as well as $10 in cash.";
+            }
+            
+            else {
+                this.user.status = "BYOB or Pay At Door";
+                this.outputs.msg.textContent = " as well as your alcohol of choice or $10 for entry.";
+            }
+            
+        }.bind(this);
+        
+        // Search if Email Exists
+        this.submitSearch = function(e) {
+            
+            e.preventDefault();
+            
+            let email = this.inputs.temail.value;
+            
+            this.search({
+                email: email,
+                
+                onSuccess: function(data) {
+                    
+                    // Navigate To Next Slide And Show Ticket
+                    console.log(data);
+                    
+                    this.user.name = data.name;
+                    this.user.email = email;
+                    this.user.hosts = data.hosts;
+                    this.user.subscribed = data.subscribed;
+                    this.user.payment = data.payment;
+                    this.user.status = data.status;
+                    this.user.code = data.code;                    
+                    
+                    this.props.showTix = true;
+                    this.displayTix();
+                    this.loggedIn();
+                    
+                }.bind(this),
+                
+                
+                onFail: function() {
+                    
+                    // Display Error Message
+                    
+                    this.inputs.temail.style.setProperty('--border-color', 'var(--invalid)');
+                    this.inputs.temail.style.setProperty('--focus-out', 'var(--invalid)');
+                    
+                    document.getElementById('user-not-registered').textContent = "Either your email is incorrect, or you haven't registered for the party yet.";
+                    
+                }.bind(this)
+            });
+            
         }.bind(this);
         
         // Add Event Listeners
@@ -677,16 +957,19 @@ function wizard() {
             // On Input
             this.inputs.name.addEventListener("input", this.checkName);
             this.inputs.email.addEventListener("input", this.checkEmail);
+            this.inputs.temail.addEventListener("input", this.checkTixEmail);
             
             // On Blur
             this.inputs.name.addEventListener("blur", this.checkName);
             this.inputs.email.addEventListener("blur", this.checkEmail);
+            this.inputs.temail.addEventListener("blur", this.checkTixEmail);
             
             // Checkbox Listener
             this.inputs.sub.addEventListener("change", this.checkSubscribe);
             
             // On Submit
             this.inputs.form.addEventListener("submit", this.preventSubmit);
+            this.inputs.tform.addEventListener("submit", this.submitSearch);
             
             // Host Select
             for ( var i = 0; i < this.inputs.hosts.length; i++ ) {
@@ -709,25 +992,277 @@ function wizard() {
         
     };
     
-}
+    this.register = function() {
+        
+        this.user.code = "AFBB";
+        
+        let thus = this;
+        
+        let invitees = this.user.hosts;
+        
+        this.updateConfirmation = function(code) {
+            
+            $.ajax({
+                type:'post',
+                url:'assets/php/update.php',
+                data:{
+                    update_code: "true", 
+                    email: this.user.email,
+                    code: code
+                },
 
-function serverSide() {
+                success:function(response) {
+
+                    if(response == "success") {
+                        console.log('It should have updated the confirmation code, check the db');
+                        console.log(response);
+                    }
+
+                    else {
+                        console.log('Something Went Wrong');
+                        console.log(response);
+                    }
+
+                }
+            });
+            
+        }.bind(this);
+        
+        $.ajax({
+            type:'post',
+            url:'assets/php/register.php',
+            data:{
+                create_account: "true", 
+                name:thus.user.name,
+                email: thus.user.email,
+                subscribed: thus.user.subscribed,
+                hosts: invitees,
+                payment: thus.user.payment,
+                status: thus.user.status,
+                code: thus.user.code
+            },
+
+            success:function(response) {
+
+                if(response == "success") {
+                    console.log('It should have worked, check the db');
+                    console.log(response);
+                }
+
+                else {
+                    console.log('Something Went Wrong');
+                    console.log(response);
+                }
+
+            }
+        }).done(function(){
+            
+            this.search({
+                
+                email: this.user.email,
+                
+                onSuccess: function(data) {
+                    
+                    let id = data.id;
+                    
+                    if ( id < 10 ) {
+                        id = "0" + id;
+                    }
+                    
+                    this.user.code = this.user.code + id;
+                    
+                    this.updateConfirmation(this.user.code);
+                    
+                    //this.sendEmail();
+                    
+                    this.loggedIn();
+                    
+                }.bind(this),
+                
+                onFail: function() {
+                    
+                    console.log("something went wrong");
+                    
+                }.bind(this)
+                
+            });
+            
+        }.bind(this));
+        
+    };
     
-    var nightmare = new dream();
+    this.search = function(props) {
+        
+        /*
+        email: string
+        onSuccess: function
+        onFail: function
+        */
+        
+         $.ajax({
+            type:'post',
+            url:'assets/php/search.php',
+            data:{
+                search:"yes",
+                email: props.email
+            },
+
+            success:function(response) {
+
+                if(response=="fail") {
+
+                    console.log("email isnt there");
+                    
+                    props.onFail();
+
+                }
+
+                else {
+
+                    var obj = JSON.parse(response);
+                    
+                    props.onSuccess(obj);
+
+                }
+            }.bind(this)
+
+        });
+
+    }.bind(this);
     
-    this.checkUser = function() {};
+    this.loggedIn = function() {
+        this.elements.open.style.display = "none";
+        this.elements.openTicket.classList.remove("button--secondary");
+        this.elements.openTicket.classList.add("button--primary");
+        this.elements.openUser.style.display = "block";
+        this.elements.openUser.textContent = "Hi " + this.user.name;
+        
+        let names = document.querySelectorAll('.user-info-name');
+        
+        for ( var i = 0; i < names.length; i++ ) {
+            names[i].textContent = this.user.name;
+        }
+        
+        document.getElementById('user-info-email').textContent = this.user.email;
+        
+        if ( this.user.status == "Pending" ) {
+            document.getElementById('s-pending').style.display = "block";
+        }
+    };
     
-    this.dbPush() = function() {};
+    this.loggedOut = function() {
+        
+        this.elements.open.style.display = "block";
+        this.elements.openTicket.classList.remove("button--primary");
+        this.elements.openTicket.classList.add("button--secondary");
+        this.elements.openUser.style.display = "none";
+        this.props.showTix = false;
+        
+        this.user.name = undefined;
+        this.user.email = undefined;
+        this.user.subscribed = false;
+        this.user.hosts = [];
+        this.user.payment = undefined;
+        this.user.status = undefined;
+        this.user.code = undefined;
+        
+        this.props.currentPage = 0;
+        
+        $.ajax({
+            type:'post',
+            url:'assets/php/clear.php',
+            data:{
+                check_login:"yes"
+            },
+
+            success:function(response) {
+
+                if(response=="cleared") {
+
+                    console.log("Cleared Out Session");
+
+                }
+
+                else {
+
+                    console.log("Not sure what happened there");
+
+                }
+                
+            }.bind(this)
+
+        });
+        
+    };
     
-    this.attachListeners() = function() {};
+    this.getSession = function() {
+
+        $.ajax({
+            type:'post',
+            url:'assets/php/cookies.php',
+            data:{
+                check_login:"yes"
+            },
+
+            success:function(response) {
+
+                if(response=="fail") {
+
+                    console.log("Not a returning visitor");
+
+                }
+
+                else {
+
+                    var obj = JSON.parse(response);
+                    
+                    console.log(obj);
+                    
+                    this.user.email = obj.email;
+                    this.user.name = obj.name;
+                    this.user.code = obj.code;
+                    this.user.status = obj.status;
+                    this.props.showTix = true;
+                    
+                    this.loggedIn();
+
+                }
+            }.bind(this)
+
+        });
+        
+    };
+    
+    this.sendEmail = function() {
+        
+        $.ajax({
+            type:'post',
+            url:'assets/php/mailto.php',
+            data:{
+                check_login:"yes",
+                email: this.user.email,
+                name: this.user.name
+            },
+
+            success:function(response) {
+
+                if(response=="success") {
+
+                    console.log("Mail Should Be Sent");
+
+                }
+
+                else {
+
+                    console.log("something went wrong");
+                    
+                }
+            }.bind(this)
+
+        });
+        
+    };
     
 }
 
 window.addEventListener("load", init);
-
-
-
-
-
-
-

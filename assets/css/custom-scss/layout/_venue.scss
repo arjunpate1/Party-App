@@ -9,18 +9,27 @@
         color: var(--primary);
         letter-spacing: .7rem;
         margin-bottom: 3rem;
+        
+        @include respond(phone) {
+            padding: 0 3rem;
+            font-size: 3rem;
+            letter-spacing: .5rem;
+        }
     }
     
     &__address {
         letter-spacing: .1rem;
         line-height: 2;
         
+        @include respond(phone) {
+            padding: 0 3rem;
+        }
     }
     
     &__map {
         width: 60%;
         height: 50rem;
-        margin: 5rem auto 0 auto;
+        margin: 5rem auto 4rem auto;
         
         @include respond(tab-land) {
             width: 75%;
@@ -31,7 +40,7 @@
         }
         
         @include respond(phone) {
-            width: 95%;
+            width: 100%;
         }
         
         #map {
