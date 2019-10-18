@@ -998,7 +998,7 @@ function wizard() {
         
         let thus = this;
         
-        let invitees = this.user.hosts;
+        let invitees = this.user.hosts.toString();
         
         this.updateConfirmation = function(code) {
             
