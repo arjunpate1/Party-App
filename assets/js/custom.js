@@ -700,6 +700,8 @@ function wizard() {
                 
             }
             
+            value = value.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
+            
             this.user.name = value;
             
             this.checkForm();
